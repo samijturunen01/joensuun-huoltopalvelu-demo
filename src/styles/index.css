@@ -446,15 +446,16 @@
   stroke-dashoffset: 0;
 }
 
-/* Hero intro hold – set by the inline head script, released by the intro. */
-.intro-pending [data-intro='hide'] {
+/* Hero intro hold – set by the inline head script, released by the intro.
+   Only the logo machine is held; headline, copy and CTAs always paint immediately. */
+.intro-pending [data-intro='hold'],
+.intro-pending [data-intro='draw'],
+.intro-pending [data-part='dot'],
+.intro-pending [data-part='gear'] {
   opacity: 0;
 }
-.intro-pending [data-intro='line'] {
-  transform: translate3d(0, 105%, 0);
-}
-.intro-pending [data-intro='draw'] {
-  opacity: 0;
+.intro-pending [data-porthole] {
+  clip-path: circle(0% at 50% 50%);
 }
 .intro-pending [data-intro='wipe'] {
   clip-path: inset(0 100% 0 0);

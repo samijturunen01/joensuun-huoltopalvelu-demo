@@ -43,22 +43,18 @@ export function Hero() {
     const ctx = gsap.context(() => {
       // Take over the pre-paint hold with inline states, then release the CSS hold.
       gsap.set(q('[data-intro="draw"]'), { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0 })
-      gsap.set(q('[data-intro="line"]'), { y: 0, yPercent: 105 })
-      gsap.set(q('[data-intro="hide"]'), { autoAlpha: 0, y: 18 })
-      gsap.set(q('[data-part="dot"]'), { scale: 0, transformOrigin: '50% 50%' })
-      gsap.set(q('[data-part="gear"]'), { scale: 0, rotate: -160, transformOrigin: '50% 50%' })
+      gsap.set(q('[data-sticker]'), { autoAlpha: 0, y: 16 })
+      gsap.set(q('[data-part="dot"]'), { scale: 0, opacity: 1, transformOrigin: '50% 50%' })
+      gsap.set(q('[data-part="gear"]'), { scale: 0, opacity: 1, rotate: -160, transformOrigin: '50% 50%' })
       gsap.set(q('[data-part="wave"]'), { opacity: 0 })
       gsap.set(q('[data-porthole]'), { clipPath: 'circle(0% at 50% 50%)' })
       gsap.set(q('[data-porthole] img'), { scale: 1.3, rotate: -30 })
-      gsap.set(q('[data-panel]'), { autoAlpha: 0, scale: 0.94, y: 12 })
       if (word) gsap.set(word, { clipPath: 'inset(0% 100% 0% 0%)' })
       releaseIntroHold()
 
       tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.to(q('[data-intro="line"]'), { yPercent: 0, duration: 1.05, stagger: 0.09, ease: 'expo.out' }, 0.1)
-        .to(q('[data-intro="hide"]'), { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.07 }, 0.5)
-        .to(q('[data-panel]'), { autoAlpha: 1, scale: 1, y: 0, duration: 0.8 }, 0.05)
-        .set(q('[data-part="housing"]'), { opacity: 1 }, 0.2)
+      // Headline, copy and calls to action are never held back – only the machine animates.
+      tl.set(q('[data-part="housing"]'), { opacity: 1 }, 0.2)
         .to(q('[data-part="housing"]'), { strokeDashoffset: 0, duration: 1.0, ease: 'power2.inOut' }, 0.2)
         .set(q('[data-part="door"]'), { opacity: 1 }, 0.45)
         .to(q('[data-part="door"]'), { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, 0.45)
@@ -83,10 +79,10 @@ export function Hero() {
         // the door opens onto an authentic rating plate
         .to(q('[data-porthole]'), { clipPath: 'circle(50% at 50% 50%)', duration: 0.85, ease: 'power3.inOut' }, 2.45)
         .to(q('[data-porthole] img'), { scale: 1, rotate: 0, duration: 1.3, ease: 'expo.out' }, 2.45)
-        .fromTo(q('[data-sticker]'), { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 2.85)
+        .to(q('[data-sticker]'), { autoAlpha: 1, y: 0, duration: 0.7 }, 2.85)
       if (word) tl.to(word, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.0, ease: 'power2.inOut' }, 0.55)
       tl.eventCallback('onComplete', () => {
-        gsap.set(q('[data-intro], [data-part], [data-porthole], [data-porthole] img, [data-panel], [data-sticker]'), {
+        gsap.set(q('[data-intro], [data-part], [data-porthole], [data-porthole] img, [data-sticker]'), {
           clearProps: 'transform,clipPath,strokeDasharray,strokeDashoffset,opacity,visibility,scale,rotate',
         })
         gsap.set(q('[data-part="wave"], [data-part="ghost"]'), { opacity: 0 })
@@ -143,23 +139,23 @@ export function Hero() {
       <div className="container-x relative grid gap-x-10 gap-y-8 pb-16 pt-6 sm:pt-10 lg:min-h-[calc(100svh-var(--header-h))] lg:grid-cols-12 lg:grid-rows-[1fr_auto_1fr] lg:gap-y-0 lg:pb-20 lg:pt-6 xl:gap-x-16">
         {/* Headline (mobile: first, desktop: left column, upper half) */}
         <div className="lg:col-span-7 lg:col-start-1 lg:row-start-1 lg:self-end">
-          <p data-intro="hide" className="plate-label flex items-center gap-3 text-ink-2">
+          <p className="plate-label flex items-center gap-3 text-ink-2">
             <span className="led" aria-hidden="true" />
             Kodinkonehuolto ja varaosat · Joensuu
           </p>
           <h1 id="hero-title" className="mt-6">
             <span className="block overflow-hidden pb-[0.06em]">
-              <span data-intro="line" className="display-m block text-ink-2">
+              <span className="display-m block text-ink-2">
                 Kodinkonehuolto ja varaosat
               </span>
             </span>
             <span className="block overflow-hidden pb-[0.04em]">
-              <span data-intro="line" className="display-xl block">
+              <span className="display-xl block">
                 Joensuussa
               </span>
             </span>
             <span className="block overflow-hidden pb-[0.08em]">
-              <span data-intro="line" className="display-xl block text-green-600">
+              <span className="display-xl block text-green-600">
                 vuodesta 1976.
               </span>
             </span>
@@ -216,6 +212,7 @@ export function Hero() {
           {/* Plate sticker caption */}
           <div
             data-sticker=""
+            data-intro="hold"
             className="plate relative z-10 -mt-8 ml-auto mr-4 w-[min(22rem,88%)] p-4 sm:-mt-10 sm:mr-[-0.5rem] lg:mr-[-1.5rem]"
           >
             <div className="flex items-start justify-between gap-3">
@@ -248,11 +245,11 @@ export function Hero() {
 
         {/* Copy + calls to action (mobile: after the machine) */}
         <div className="lg:col-span-7 lg:col-start-1 lg:row-start-2 lg:self-start">
-          <p data-intro="hide" className="lede max-w-[36rem] lg:mt-7">
+          <p className="lede max-w-[36rem] lg:mt-7">
             Pesukone, jääkaappi tai uuni reistailee? Huollamme kodinkoneita ja hankimme niihin varaosat – {brandCount} merkkiä
             Mielestä ja Boschista Electroluxiin ja UPOon. Palvelemme Joensuussa ja koko Pohjois-Karjalassa.
           </p>
-          <div data-intro="hide" className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href={company.phone.href} className="btn btn-primary text-[1.05rem]">
               <Phone size={19} aria-hidden="true" />
               Soita <span className="tabular">{company.phone.display}</span>
@@ -269,7 +266,7 @@ export function Hero() {
               <MessageCircle size={19} aria-hidden="true" /> <span className="link-u">WhatsApp</span>
             </a>
           </div>
-          <dl data-intro="hide" className="mt-12 grid max-w-[40rem] grid-cols-2 border-t border-ink/15 sm:grid-cols-3">
+          <dl className="mt-12 grid max-w-[40rem] grid-cols-2 border-t border-ink/15 sm:grid-cols-3">
             {[
               ['Avoinna', company.hours.label],
               ['Osoite', company.address.street],
