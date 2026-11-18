@@ -9,7 +9,7 @@ export function FaqList({ items, tone = 'light' }: { items: Faq[]; tone?: 'light
       {items.map((f, i) => (
         <details key={f.id} className={`group border-b ${line}`} data-reveal style={{ '--reveal-delay': `${i * 50}ms` } as React.CSSProperties}>
           <summary className="flex cursor-pointer list-none items-start gap-5 py-6 [&::-webkit-details-marker]:hidden">
-            <span className="mono tabular mt-1.5 text-xs opacity-55">{String(i + 1).padStart(2, '0')}</span>
+            <span className={`mono tabular mt-1.5 text-xs ${tone === 'dark' ? 'text-white/65' : 'text-ink-3'}`}>{String(i + 1).padStart(2, '0')}</span>
             <span className="flex-1 font-display text-[1.3rem] font-[700] leading-tight [font-stretch:85%] sm:text-[1.55rem]">{f.q}</span>
             <span
               className={`mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-full border transition-transform duration-500 group-open:rotate-45 ${

@@ -84,7 +84,7 @@ export function ZoneDiagram({ tone = 'light', className = '' }: { tone?: 'light'
           ))}
         </ul>
       </div>
-      <figcaption className="plate-label mt-5 opacity-60">Kaavio, ei mittakaavassa · hinnat sis. alv 25,5 %</figcaption>
+      <figcaption className={`plate-label mt-5 ${tone === 'dark' ? 'text-white/65' : 'text-ink-3'}`}>Kaavio, ei mittakaavassa · hinnat sis. alv 25,5 %</figcaption>
     </figure>
   )
 }

@@ -60,6 +60,7 @@ export function Header() {
   }, [open])
 
   return (
+    <>
     <header
       className={`sticky top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
         scrolled || open
@@ -116,8 +117,9 @@ export function Header() {
           </button>
         </div>
       </div>
+    </header>
 
-      {/* Mobile menu */}
+      {/* Mobile menu – outside <header>: its backdrop-filter would trap position:fixed */}
       <div
         id="mobile-menu"
         ref={menuRef}
@@ -168,6 +170,6 @@ export function Header() {
           </div>
         </nav>
       </div>
-    </header>
+    </>
   )
 }

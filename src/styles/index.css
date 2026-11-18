@@ -59,6 +59,8 @@
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     scroll-padding-top: calc(var(--header-h) + 1rem);
+    /* page swaps must not be "anchored" – the scroll manager owns scroll position */
+    overflow-anchor: none;
   }
   body {
     background: var(--color-paper);

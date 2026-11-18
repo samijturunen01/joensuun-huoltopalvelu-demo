@@ -53,6 +53,7 @@ export function PlateDecoder({ tone = 'dark' }: { tone?: 'light' | 'dark' }) {
       {/* Illustrated plate */}
       <figure className="lg:col-span-7">
         <div
+          aria-hidden="true"
           className="plate mx-auto max-w-[36rem] rotate-[-1.2deg] p-6 pl-10 text-ink sm:p-8 sm:pl-12"
           style={{ background: 'linear-gradient(135deg,#fbfbf8,#e9ebe5 55%,#f6f7f3)' }}
         >
@@ -66,11 +67,11 @@ export function PlateDecoder({ tone = 'dark' }: { tone?: 'light' | 'dark' }) {
               220–240 V ~ 50 Hz
             </span>
           </div>
-          <dl className="mono mt-3 grid gap-1.5 text-[0.82rem] sm:text-[0.9rem]">
+          <div className="mono mt-3 grid gap-1.5 text-[0.82rem] sm:text-[0.9rem]">
             <div className={hl('model')}>
               {pin('model', 1)}
-              <dt className="inline text-ink-3">Mod. / E-Nr </dt>
-              <dd className="inline font-semibold">ESIM 7000 X</dd>
+              <span className="text-ink-3">Mod. / E-Nr </span>
+              <span className="font-semibold">ESIM 7000 X</span>
             </div>
             <div className="flex gap-6 px-0 py-1 text-ink-3">
               <span>Type FL 24</span>
@@ -79,15 +80,15 @@ export function PlateDecoder({ tone = 'dark' }: { tone?: 'light' | 'dark' }) {
             </div>
             <div className={hl('article')}>
               {pin('article', 2)}
-              <dt className="inline text-ink-3">PNC / Art.Nr / FD </dt>
-              <dd className="inline font-semibold">914 000 000 · 00</dd>
+              <span className="text-ink-3">PNC / Art.Nr / FD </span>
+              <span className="font-semibold">914 000 000 · 00</span>
             </div>
             <div className={hl('serial')}>
               {pin('serial', 3)}
-              <dt className="inline text-ink-3">Ser.No. / Z-Nr </dt>
-              <dd className="inline font-semibold">01234567</dd>
+              <span className="text-ink-3">Ser.No. / Z-Nr </span>
+              <span className="font-semibold">01234567</span>
             </div>
-          </dl>
+          </div>
           <div className="mt-4 flex items-end justify-between gap-4 border-t border-ink/20 pt-3">
             <Barcode value="ESIM-7000" className="h-9 w-40 text-ink/80" />
             <span className="flex gap-1.5" aria-hidden="true">

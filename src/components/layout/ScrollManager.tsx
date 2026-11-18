@@ -19,31 +19,19 @@ export function ScrollManager() {
   // Compare history keys (not a "first run" flag) so StrictMode's double effects stay idempotent.
   const initialKey = useRef(location.key)
   const lastPath = useRef(location.pathname)
-  const keyRef = useRef(location.key)
+  // History entry currently on screen and its last known scroll position. The position is
+  // saved for the outgoing entry synchronously at navigation time – browser scroll anchoring
+  // can move the viewport while the new page is swapped in, so async listeners are unreliable.
+  const shownKey = useRef(location.key)
+  const lastY = useRef(0)
 
   useIsoLayoutEffect(() => {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
-  }, [])
-
-  useIsoLayoutEffect(() => {
-    keyRef.current = location.key
-  }, [location.key])
-
-  // Remember the scroll position of every history entry (for back/forward).
-  useIsoLayoutEffect(() => {
-    let raf = 0
     const onScroll = () => {
-      if (raf) return
-      raf = requestAnimationFrame(() => {
-        raf = 0
-        positions.set(keyRef.current, window.scrollY)
-      })
+      lastY.current = window.scrollY
     }
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useIsoLayoutEffect(() => {
@@ -52,6 +40,10 @@ export function ScrollManager() {
       return
     }
     introState.navigated = true
+    if (shownKey.current !== location.key) {
+      positions.set(shownKey.current, lastY.current)
+      shownKey.current = location.key
+    }
     const samePage = lastPath.current === location.pathname
     lastPath.current = location.pathname
 

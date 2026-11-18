@@ -45,9 +45,9 @@ export function BrandWall() {
                 <Link
                   to={`/tyyppikilpi/?merkki=${b.id}`}
                   className="group inline-flex flex-col items-start font-display font-[760] leading-[1.02] tracking-[-0.025em] text-ink transition-colors duration-300 [font-stretch:76%] hover:text-green-600 lg:flex-row"
-                  aria-label={`${b.label}${b.group ? ` – tyyppikilpiohje (${groupLabel[b.group]})` : ''}`}
                 >
                   <span className="text-[clamp(1.9rem,8vw,2.6rem)] lg:text-[1em]">{b.name}</span>
+                  <span className="sr-only"> – {b.label}, tyyppikilpiohje</span>
                   {tag && (
                     <span className="mono mt-1 text-[0.66rem] font-medium uppercase tracking-[0.12em] text-ink-3 transition-colors group-hover:text-green-700 lg:ml-1.5 lg:mt-[0.55em] lg:text-[0.7rem]">
                       {tag}
