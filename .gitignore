@@ -7,3 +7,6 @@ playwright-report
 .env
 .env.*
 !.env.example
+
+# Unused / not-for-publication originals (AI images, third-party marks)
+source-assets/excluded/
