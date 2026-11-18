@@ -6,7 +6,9 @@ import { App } from './App'
 /** Render a route to static HTML for prerendering (see scripts/prerender.mjs). */
 export function render(route: string, base: string) {
   const basename = base.replace(/\/$/, '') || '/'
-  const location = (basename === '/' ? '' : basename) + (route === '/404' ? '/404-ei-loydy' : route)
+  // GitHub Pages serves /route/ (trailing slash) – render the same URL the browser will hydrate.
+  const path = route === '/' ? '/' : route === '/404' ? '/404-ei-loydy/' : `${route}/`
+  const location = (basename === '/' ? '' : basename) + path
   return renderToString(
     <StrictMode>
       <StaticRouter location={location} basename={basename}>

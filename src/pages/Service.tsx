@@ -86,7 +86,7 @@ export function Service() {
           />
           <ul className="mt-14 grid gap-x-6 gap-y-14 md:grid-cols-12">
             {shown.map((a, i) => {
-              const wide = i % 3 === 0
+              const wide = i % 4 === 0 || i % 4 === 3
               return (
                 <li
                   key={a.id}
@@ -106,7 +106,7 @@ export function Service() {
                         width={960}
                         height={720}
                         className={`w-full object-cover transition-transform duration-[1.2s] ease-[var(--ease-out-expo)] group-hover:scale-[1.04] ${
-                          wide ? 'aspect-[16/10]' : 'aspect-[4/3]'
+                          wide ? 'aspect-[16/10]' : 'aspect-[8/7]'
                         }`}
                       />
                       <span className="absolute left-4 top-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-paper text-ink">
@@ -124,7 +124,7 @@ export function Service() {
                 </li>
               )
             })}
-            <li data-reveal className="md:col-span-5">
+            <li data-reveal className={shown.length % 4 === 3 ? 'md:col-span-7' : 'md:col-span-5'}>
               <Link to="/varaosat/#merkit" className="group flex h-full min-h-[16rem] flex-col justify-between rounded-[1.4rem] bg-green-800 p-7 text-white">
                 <ApplianceIcon id="keskusimuri" className="w-16 text-green-400" />
                 <div>

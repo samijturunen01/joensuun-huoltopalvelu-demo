@@ -96,6 +96,9 @@ try {
 
     const head = [
       ...fontPreloads,
+      route === '/'
+        ? `<link rel="preload" as="image" type="image/webp" imagesrcset="${[480, 960, 1600].map((w) => `${base}images/plates/miele-pesukone-${w}.webp ${w}w`).join(', ')}" imagesizes="(min-width: 1024px) 22vw, 50vw" fetchpriority="high" />`
+        : '',
       `<title>${esc(meta.title)}</title>`,
       `<meta name="description" content="${esc(meta.description)}" />`,
       route === '/404' ? '' : `<link rel="canonical" href="${url}" />`,

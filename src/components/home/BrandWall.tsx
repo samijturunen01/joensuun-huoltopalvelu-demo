@@ -34,24 +34,29 @@ export function BrandWall() {
           </p>
         </div>
 
-        <ul className="mt-14 flex flex-wrap items-baseline gap-x-[0.18em] gap-y-1 border-t border-ink/15 pt-10 lg:mt-20" aria-label="Merkit">
-          {brands.map((b, i) => (
-            <li key={b.id} data-reveal="fade" style={{ '--reveal-delay': `${i * 35}ms` } as React.CSSProperties} className="inline-flex items-baseline">
-              <Link
-                to={`/tyyppikilpi/?merkki=${b.id}`}
-                className="group relative inline-flex items-start font-display text-[clamp(2rem,5.4vw,5rem)] font-[760] leading-[1.02] tracking-[-0.025em] text-ink transition-colors duration-300 [font-stretch:76%] hover:text-green-600"
-                aria-label={`${b.label}${b.group ? ` – tyyppikilpiohje (${groupLabel[b.group]})` : ''}`}
-              >
-                {b.name}
-                <sup className="mono ml-1 mt-[0.5em] text-[0.62rem] font-medium uppercase tracking-[0.12em] text-ink-3 transition-colors group-hover:text-green-700 sm:text-[0.7rem]">
-                  {b.category === 'kodinkoneet' ? (b.group ? groupLabel[b.group] : '') : b.category}
-                </sup>
-              </Link>
-              {i < brands.length - 1 && (
-                <span className="mx-[0.25em] inline-block h-[0.32em] w-[0.32em] translate-y-[-0.2em] rounded-full bg-green-500 text-[clamp(2rem,5.4vw,5rem)]" aria-hidden="true" />
-              )}
-            </li>
-          ))}
+        <ul
+          className="mt-14 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-ink/15 pt-10 sm:grid-cols-3 lg:mt-20 lg:flex lg:flex-wrap lg:items-baseline lg:gap-x-[0.55em] lg:gap-y-2 lg:text-[clamp(2rem,5.2vw,5rem)]"
+          aria-label="Merkit"
+        >
+          {brands.map((b, i) => {
+            const tag = b.category === 'kodinkoneet' ? (b.group ? groupLabel[b.group] : '') : b.category
+            return (
+              <li key={b.id} data-reveal="fade" style={{ '--reveal-delay': `${i * 35}ms` } as React.CSSProperties}>
+                <Link
+                  to={`/tyyppikilpi/?merkki=${b.id}`}
+                  className="group inline-flex flex-col items-start font-display font-[760] leading-[1.02] tracking-[-0.025em] text-ink transition-colors duration-300 [font-stretch:76%] hover:text-green-600 lg:flex-row"
+                  aria-label={`${b.label}${b.group ? ` – tyyppikilpiohje (${groupLabel[b.group]})` : ''}`}
+                >
+                  <span className="text-[clamp(1.9rem,8vw,2.6rem)] lg:text-[1em]">{b.name}</span>
+                  {tag && (
+                    <span className="mono mt-1 text-[0.66rem] font-medium uppercase tracking-[0.12em] text-ink-3 transition-colors group-hover:text-green-700 lg:ml-1.5 lg:mt-[0.55em] lg:text-[0.7rem]">
+                      {tag}
+                    </span>
+                  )}
+                </Link>
+              </li>
+            )
+          })}
         </ul>
       </div>
     </section>

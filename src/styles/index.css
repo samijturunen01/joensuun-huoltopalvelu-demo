@@ -452,8 +452,7 @@
   transform: translate3d(0, 105%, 0);
 }
 .intro-pending [data-intro='draw'] {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
+  opacity: 0;
 }
 .intro-pending [data-intro='wipe'] {
   clip-path: inset(0 100% 0 0);

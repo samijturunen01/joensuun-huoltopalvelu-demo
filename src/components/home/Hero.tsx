@@ -42,8 +42,8 @@ export function Hero() {
 
     const ctx = gsap.context(() => {
       // Take over the pre-paint hold with inline states, then release the CSS hold.
-      gsap.set(q('[data-intro="draw"]'), { strokeDasharray: 1, strokeDashoffset: 1 })
-      gsap.set(q('[data-intro="line"]'), { yPercent: 105 })
+      gsap.set(q('[data-intro="draw"]'), { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0 })
+      gsap.set(q('[data-intro="line"]'), { y: 0, yPercent: 105 })
       gsap.set(q('[data-intro="hide"]'), { autoAlpha: 0, y: 18 })
       gsap.set(q('[data-part="dot"]'), { scale: 0, transformOrigin: '50% 50%' })
       gsap.set(q('[data-part="gear"]'), { scale: 0, rotate: -160, transformOrigin: '50% 50%' })
@@ -58,12 +58,16 @@ export function Hero() {
       tl.to(q('[data-intro="line"]'), { yPercent: 0, duration: 1.05, stagger: 0.09, ease: 'expo.out' }, 0.1)
         .to(q('[data-intro="hide"]'), { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.07 }, 0.5)
         .to(q('[data-panel]'), { autoAlpha: 1, scale: 1, y: 0, duration: 0.8 }, 0.05)
+        .set(q('[data-part="housing"]'), { opacity: 1 }, 0.2)
         .to(q('[data-part="housing"]'), { strokeDashoffset: 0, duration: 1.0, ease: 'power2.inOut' }, 0.2)
+        .set(q('[data-part="door"]'), { opacity: 1 }, 0.45)
         .to(q('[data-part="door"]'), { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, 0.45)
+        .set(q('[data-part="slot"]'), { opacity: 1 }, 0.7)
         .to(q('[data-part="slot"]'), { strokeDashoffset: 0, duration: 0.45, ease: 'power2.out' }, 0.7)
         .to(q('[data-part="dot"]'), { scale: 1, duration: 0.45, ease: 'back.out(3)' }, 0.85)
         .fromTo(q('[data-led-glow]'), { opacity: 0 }, { opacity: 1, duration: 0.18, yoyo: true, repeat: 1, ease: 'none' }, 0.9)
         .to(q('[data-part="gear"]'), { scale: 1, rotate: 0, duration: 0.9 }, 0.85)
+        .set(q('[data-part="drum"]'), { opacity: 1 }, 0.95)
         .to(q('[data-part="drum"]'), { strokeDashoffset: 0, duration: 0.75, ease: 'power2.inOut' }, 0.95)
         .to(q('[data-part="wave"]'), { opacity: 1, duration: 0.25 }, 1.3)
         // the drum spins up and slows down like a spin cycle
@@ -136,9 +140,9 @@ export function Hero() {
   return (
     <section ref={root} aria-labelledby="hero-title" className="relative overflow-hidden">
       <div className="paper-dots pointer-events-none absolute inset-0 opacity-60 [mask-image:linear-gradient(180deg,#000,transparent_85%)]" aria-hidden="true" />
-      <div className="container-x relative grid items-center gap-x-10 gap-y-12 pb-16 pt-6 sm:pt-10 lg:min-h-[calc(100svh-var(--header-h))] lg:grid-cols-12 lg:pb-20 lg:pt-6 xl:gap-x-16">
-        {/* Copy */}
-        <div className="lg:col-span-7">
+      <div className="container-x relative grid gap-x-10 gap-y-8 pb-16 pt-6 sm:pt-10 lg:min-h-[calc(100svh-var(--header-h))] lg:grid-cols-12 lg:grid-rows-[1fr_auto_1fr] lg:gap-y-0 lg:pb-20 lg:pt-6 xl:gap-x-16">
+        {/* Headline (mobile: first, desktop: left column, upper half) */}
+        <div className="lg:col-span-7 lg:col-start-1 lg:row-start-1 lg:self-end">
           <p data-intro="hide" className="plate-label flex items-center gap-3 text-ink-2">
             <span className="led" aria-hidden="true" />
             Kodinkonehuolto ja varaosat · Joensuu
@@ -160,43 +164,10 @@ export function Hero() {
               </span>
             </span>
           </h1>
-          <p data-intro="hide" className="lede mt-7 max-w-[36rem]">
-            Pesukone, jääkaappi tai uuni reistailee? Huollamme kodinkoneita ja hankimme niihin varaosat – {brandCount} merkkiä
-            Mielestä ja Boschista Electroluxiin ja UPOon. Palvelemme Joensuussa ja koko Pohjois-Karjalassa.
-          </p>
-          <div data-intro="hide" className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href={company.phone.href} className="btn btn-primary text-[1.05rem]">
-              <Phone size={19} aria-hidden="true" />
-              Soita <span className="tabular">{company.phone.display}</span>
-            </a>
-            <Link to="/huoltopyynto/" className="btn btn-outline text-[1.05rem]">
-              Tee huoltopyyntö <ArrowRight size={19} className="btn-arrow" aria-hidden="true" />
-            </Link>
-            <a
-              href={company.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-[3.25rem] items-center gap-2 px-2 font-semibold text-ink-2 hover:text-green-700"
-            >
-              <MessageCircle size={19} aria-hidden="true" /> <span className="link-u">WhatsApp</span>
-            </a>
-          </div>
-          <dl data-intro="hide" className="mt-12 grid max-w-[40rem] grid-cols-2 border-t border-ink/15 sm:grid-cols-3">
-            {[
-              ['Avoinna', company.hours.label],
-              ['Osoite', company.address.street],
-              ['Perustettu', company.foundedLabel],
-            ].map(([k, v], i) => (
-              <div key={k} className={`pt-4 pr-4 ${i === 2 ? 'col-span-2 sm:col-span-1' : ''}`}>
-                <dt className="plate-label text-ink-3">{k}</dt>
-                <dd className="mt-1.5 font-semibold tabular">{v}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
         {/* The machine: logo mark at hero scale with a real rating plate behind the door */}
-        <div className="relative mx-auto w-full max-w-[30rem] lg:col-span-5 lg:max-w-none">
+        <div className="relative ml-auto w-[84%] max-w-[30rem] sm:mx-auto sm:w-full lg:col-span-5 lg:col-start-8 lg:row-span-3 lg:row-start-1 lg:max-w-none lg:self-center">
           <div
             data-panel=""
             className="logo-gradient on-green relative overflow-hidden rounded-[clamp(1.4rem,3vw,2.25rem)] p-[9%] shadow-[0_40px_80px_-40px_rgb(0_57_26/0.7)]"
@@ -274,6 +245,44 @@ export function Hero() {
             </div>
           </div>
         </div>
+
+        {/* Copy + calls to action (mobile: after the machine) */}
+        <div className="lg:col-span-7 lg:col-start-1 lg:row-start-2 lg:self-start">
+          <p data-intro="hide" className="lede max-w-[36rem] lg:mt-7">
+            Pesukone, jääkaappi tai uuni reistailee? Huollamme kodinkoneita ja hankimme niihin varaosat – {brandCount} merkkiä
+            Mielestä ja Boschista Electroluxiin ja UPOon. Palvelemme Joensuussa ja koko Pohjois-Karjalassa.
+          </p>
+          <div data-intro="hide" className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a href={company.phone.href} className="btn btn-primary text-[1.05rem]">
+              <Phone size={19} aria-hidden="true" />
+              Soita <span className="tabular">{company.phone.display}</span>
+            </a>
+            <Link to="/huoltopyynto/" className="btn btn-outline text-[1.05rem]">
+              Tee huoltopyyntö <ArrowRight size={19} className="btn-arrow" aria-hidden="true" />
+            </Link>
+            <a
+              href={company.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[3.25rem] items-center gap-2 px-2 font-semibold text-ink-2 hover:text-green-700"
+            >
+              <MessageCircle size={19} aria-hidden="true" /> <span className="link-u">WhatsApp</span>
+            </a>
+          </div>
+          <dl data-intro="hide" className="mt-12 grid max-w-[40rem] grid-cols-2 border-t border-ink/15 sm:grid-cols-3">
+            {[
+              ['Avoinna', company.hours.label],
+              ['Osoite', company.address.street],
+              ['Perustettu', company.foundedLabel],
+            ].map(([k, v], i) => (
+              <div key={k} className={`pt-4 pr-4 ${i === 2 ? 'col-span-2 sm:col-span-1' : ''}`}>
+                <dt className="plate-label text-ink-3">{k}</dt>
+                <dd className="mt-1.5 font-semibold tabular">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
       </div>
     </section>
   )

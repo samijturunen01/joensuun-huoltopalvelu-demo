@@ -4,13 +4,14 @@ import { PageIntro } from '../components/ui/PageIntro'
 import { SectionHeading } from '../components/ui/SectionHeading'
 import { MapEmbed } from '../components/contact/MapEmbed'
 import { Barcode } from '../components/ui/Barcode'
+import { EmailText } from '../components/ui/EmailText'
 import { company, fullAddress } from '../data/company'
 
 const channels = [
   { icon: Phone, label: 'Soita', value: company.phone.display, href: company.phone.href },
   { icon: MessageSquare, label: 'Tekstiviesti', value: company.phone.display, href: company.sms },
   { icon: MessageCircle, label: 'WhatsApp', value: company.phone.display, href: company.whatsapp, ext: true },
-  { icon: Mail, label: 'Sähköposti', value: company.email, href: `mailto:${company.email}` },
+  { icon: Mail, label: 'Sähköposti', value: <EmailText email={company.email} />, href: `mailto:${company.email}` },
 ]
 
 export function Contact() {
@@ -69,7 +70,7 @@ export function Contact() {
                 >
                   <Icon size={24} aria-hidden="true" className="text-green-600" />
                   <span className="plate-label mt-8 text-ink-3">{label}</span>
-                  <span className="mt-1 break-words font-display text-[1.45rem] font-[730] leading-tight [font-stretch:84%] group-hover:text-green-700">
+                  <span className="mt-1 font-display text-[1.45rem] font-[730] leading-tight [font-stretch:84%] group-hover:text-green-700">
                     {value}
                   </span>
                 </a>

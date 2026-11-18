@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Clock, Mail, MapPin, MessageCircle, MessageSquare, Phone } from 'lucide-react'
 import { company } from '../../data/company'
 import { Mark } from '../brand/Mark'
+import { EmailText } from './EmailText'
 
 /** Closing call to action: the logo badge turned into a contact panel. */
 export function ContactPanel({ title = 'Soita, laita viestiä tai tule käymään.' }: { title?: string }) {
@@ -38,7 +39,7 @@ export function ContactPanel({ title = 'Soita, laita viestiä tai tule käymää
             {[
               { icon: MessageCircle, label: 'WhatsApp', value: company.phone.display, href: company.whatsapp, ext: true },
               { icon: MessageSquare, label: 'Tekstiviesti', value: company.phone.display, href: company.sms },
-              { icon: Mail, label: 'Sähköposti', value: company.email, href: `mailto:${company.email}` },
+              { icon: Mail, label: 'Sähköposti', value: <EmailText email={company.email} />, href: `mailto:${company.email}` },
               { icon: MapPin, label: 'Käyntiosoite', value: `${company.address.street}, ${company.address.city}`, href: company.maps.open, ext: true },
               { icon: Clock, label: 'Aukioloajat', value: company.hours.long },
             ].map(({ icon: Icon, label, value, href, ext }) => {
@@ -47,7 +48,7 @@ export function ContactPanel({ title = 'Soita, laita viestiä tai tule käymää
                   <Icon size={20} aria-hidden="true" className="mt-0.5 flex-none text-signal" />
                   <span className="min-w-0">
                     <span className="plate-label block text-white/65">{label}</span>
-                    <span className="mt-1 block break-words font-semibold">{value}</span>
+                    <span className="mt-1 block font-semibold">{value}</span>
                   </span>
                 </>
               )

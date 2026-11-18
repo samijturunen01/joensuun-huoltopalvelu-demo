@@ -74,8 +74,7 @@ export function Prices() {
               ))}
             </dl>
             <p className="mt-6 text-[0.95rem] text-white/70">
-              Yli 30 kilometrin matkoilta veloitetaan ajo ja matka kilometrien mukaan. Lähtöpiste on liikkeemme osoitteessa{' '}
-              {company.address.street}.
+              Yli 30 kilometrin matkoilta veloitetaan ajo ja matka kilometrien mukaan.
             </p>
           </article>
         </div>

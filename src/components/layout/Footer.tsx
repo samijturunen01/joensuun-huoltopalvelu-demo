@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Logo } from '../brand/Logo'
 import { Barcode } from '../ui/Barcode'
+import { EmailText } from '../ui/EmailText'
 import { company } from '../../data/company'
 import { navRoutes } from '../../data/seo'
 
@@ -52,9 +53,9 @@ export function Footer() {
                   Puh. {company.phone.display}
                 </a>
               </p>
-              <p className="break-all">
+              <p>
                 <a href={`mailto:${company.email}`} className="link-u">
-                  {company.email}
+                  <EmailText email={company.email} />
                 </a>
               </p>
               <p>{company.hours.long}</p>

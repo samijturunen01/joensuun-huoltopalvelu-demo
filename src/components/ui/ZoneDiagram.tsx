@@ -40,13 +40,14 @@ export function ZoneDiagram({ tone = 'light', className = '' }: { tone?: 'light'
             {/* ring labels */}
             {radii.map((r, i) => {
               const z = travelZones[i]
-              const y = 220 - r + (i === 0 ? 34 : 22)
+              const inner = i === 0 ? 14 : radii[i - 1]
+              const y = 220 - (inner + r) / 2 - 6
               return (
-                <g key={z.id} opacity={active && active !== z.id ? 0.4 : 1} style={{ transition: 'opacity .3s' }}>
-                  <text x="220" y={y} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="1.4" fill={muted}>
+                <g key={z.id} className="hidden sm:inline" opacity={active && active !== z.id ? 0.4 : 1} style={{ transition: 'opacity .3s' }}>
+                  <text x="220" y={y} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10.5" letterSpacing="1.2" fill={muted}>
                     {z.label.toUpperCase()}
                   </text>
-                  <text x="220" y={y + 17} textAnchor="middle" fontFamily="var(--font-display)" fontWeight="700" fontSize="16" fill={ink}>
+                  <text x="220" y={y + 17} textAnchor="middle" fontFamily="var(--font-display)" fontWeight="700" fontSize="17" fill={ink}>
                     {euro(z.price, z.unit)}
                   </text>
                 </g>
