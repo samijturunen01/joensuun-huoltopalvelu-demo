@@ -54,7 +54,7 @@ drum-window reveals, self-drawing lines; calm elsewhere.
 - Repository: https://github.com/samijturunen01/joensuun-huoltopalvelu-demo
 - Live demo: https://samijturunen01.github.io/joensuun-huoltopalvelu-demo/
 - GitHub Actions workflow `.github/workflows/deploy.yml` (lint → build → tests → Pages)
-- Status: see the bottom of this file (updated after each deploy)
+- Status: **deployed and verified** (see Deploy log)
 
 ## Known issues / to confirm with the customer
 
@@ -69,6 +69,19 @@ drum-window reveals, self-drawing lines; calm elsewhere.
 2. Optional photos (storefront, workshop, technician) – see `docs/IMAGE_REPLACEMENT_LIST.md`.
 3. For production: domain/DNS, Apps Script + reCAPTCHA, privacy notice, enable indexing.
 
+## Performance (live, homepage, Playwright measurement 18.11.2026)
+
+| Profile | FCP | LCP | CLS |
+|---|---|---|---|
+| Desktop 1440×900, cold cache | 1.96 s | 1.96 s (hero headline) | 0.06 (font swap) |
+| Pixel 7, slow 4G (1.6 Mbit/s, 150 ms) + 4× CPU | 2.42 s | 2.42 s (hero text) | 0 |
+
+Initial JS ≈ 165 kB gzip (React 82 + GSAP 45 + app 37); photos are responsive WebP, lazy below the fold.
+The intro holds back only the logo machine – headline, copy and CTAs paint immediately
+(this change cut throttled-mobile LCP from 5.7 s to 2.4 s).
+
 ## Deploy log
 
-- 18.11.2026 – initial deploy (see final handover for verification results)
+- 18.11.2026 – repository created, GitHub Pages (Actions) enabled, first deploy ✔ (CI: lint, build, 94 tests)
+- 18.11.2026 – hero copy no longer held by the intro; redeploy ✔ (CI 94 passed)
+- 18.11.2026 – live verification: all routes 200, unknown URL 404 (branded), `LIVE_URL` Playwright run 94 passed / 2 skipped
